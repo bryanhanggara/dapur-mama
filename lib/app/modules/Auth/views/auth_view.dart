@@ -40,6 +40,8 @@ class AuthView extends GetView<AuthController> {
                   height: 10,
                 ),
                 TextField(
+                  controller: controller.emailController,
+                  keyboardType: TextInputType.emailAddress,
                   decoration: InputDecoration(
                     enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10),
@@ -60,6 +62,7 @@ class AuthView extends GetView<AuthController> {
                 ),
                 Obx(
                   () => TextField(
+                    controller: controller.passwordController,
                     obscureText: controller.obsecureText.value,
                     decoration: InputDecoration(
                       enabledBorder: OutlineInputBorder(
@@ -97,7 +100,12 @@ class AuthView extends GetView<AuthController> {
                     borderRadius: BorderRadius.circular(10),
                   ),
                   child: ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      controller.login(
+                        controller.emailController.text,
+                        controller.passwordController.text,
+                      );
+                    },
                     style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.orange,
                         shape: RoundedRectangleBorder(

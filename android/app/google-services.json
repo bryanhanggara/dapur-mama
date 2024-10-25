@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "94243604524",
+    "project_id": "dapur-mama-b7353",
+    "storage_bucket": "dapur-mama-b7353.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:94243604524:android:9a2aa9cda39b89ab28a989",
+        "android_client_info": {
+          "package_name": "com.example.myapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBZ6TqbYRaYAOmS4bemYrF50czSEjECwZQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

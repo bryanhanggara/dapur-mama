@@ -41,6 +41,7 @@ class RegisterView extends GetView<AuthController> {
                   height: 10,
                 ),
                 TextField(
+                  controller: controller.emailController,
                   decoration: InputDecoration(
                     enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10),
@@ -61,6 +62,7 @@ class RegisterView extends GetView<AuthController> {
                 ),
                 Obx(
                   () => TextField(
+                    controller: controller.passwordController,
                     obscureText: controller.obsecureText.value,
                     decoration: InputDecoration(
                       enabledBorder: OutlineInputBorder(
@@ -96,7 +98,12 @@ class RegisterView extends GetView<AuthController> {
                     borderRadius: BorderRadius.circular(10),
                   ),
                   child: ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      controller.register(
+                        controller.emailController.text,
+                        controller.passwordController.text,
+                      );
+                    },
                     style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.orange,
                         shape: RoundedRectangleBorder(
