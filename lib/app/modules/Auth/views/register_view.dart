@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:myapp/app/modules/Auth/controllers/register_controller.dart';
 
 import '../controllers/auth_controller.dart';
 
-class AuthView extends GetView<AuthController> {
-  const AuthView({super.key});
+class RegisterView extends GetView<AuthController> {
+  const RegisterView({super.key});
   @override
   Widget build(BuildContext context) {
-    final AuthController controller = Get.find();
+    final RegisterController controller = Get.find();
 
     return Scaffold(
         body: SingleChildScrollView(
@@ -25,12 +26,12 @@ class AuthView extends GetView<AuthController> {
               children: [
                 Center(
                   child: Image.asset(
-                    'assets/images/login.webp',
+                    'assets/images/register.webp',
                     width: 200,
                   ),
                 ),
                 const Text(
-                  'Masuk',
+                  'Daftar',
                   style: TextStyle(
                     fontSize: 30,
                     fontWeight: FontWeight.bold,
@@ -79,11 +80,9 @@ class AuthView extends GetView<AuthController> {
                           controller.obsecureText.value =
                               !controller.obsecureText.value;
                         },
-                        icon: Icon(
-                          controller.obsecureText.value
-                              ? Icons.visibility
-                              : Icons.visibility_off,
-                        ),
+                        icon: controller.obsecureText.value
+                            ? const Icon(Icons.visibility)
+                            : const Icon(Icons.visibility_off),
                       ),
                     ),
                   ),
@@ -104,7 +103,7 @@ class AuthView extends GetView<AuthController> {
                           borderRadius: BorderRadius.circular(10),
                         )),
                     child: Text(
-                      "Masuk",
+                      "Daftar",
                       style: TextStyle(
                         color: Colors.white,
                       ),
@@ -117,10 +116,10 @@ class AuthView extends GetView<AuthController> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Text("Belum punya akun?"),
+                    const Text("Sudah punya akun?"),
                     TextButton(
                       onPressed: () {
-                        Get.toNamed('/register');
+                        Get.toNamed('login');
                       },
                       child: const Text("Daftar"),
                     ),
