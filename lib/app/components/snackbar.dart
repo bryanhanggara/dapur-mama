@@ -11,12 +11,12 @@ class Snackbar {
       backgroundColor: Colors.orange[300],
       colorText: Colors.white,
       borderRadius: 10,
-      margin: EdgeInsets.all(10),
-      padding: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
-      animationDuration: Duration(milliseconds: 300),
-      duration: Duration(seconds: 3),
+      margin: const EdgeInsets.all(10),
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+      animationDuration: const Duration(milliseconds: 300),
+      duration: const Duration(seconds: 3),
       isDismissible: true,
-      icon: Icon(
+      icon: const Icon(
         Icons.info,
         color: Colors.white,
       ),
