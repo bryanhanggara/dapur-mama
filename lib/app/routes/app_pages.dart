@@ -1,8 +1,10 @@
 import 'package:get/get.dart';
-import 'package:myapp/app/modules/Auth/views/register_view.dart';
 
+import '../modules/AddFood/bindings/add_food_binding.dart';
+import '../modules/AddFood/views/add_food_view.dart';
 import '../modules/Auth/bindings/auth_binding.dart';
 import '../modules/Auth/views/auth_view.dart';
+import '../modules/Auth/views/register_view.dart';
 import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/views/home_view.dart';
 
@@ -30,6 +32,11 @@ class AppPages {
       name: register,
       page: () => const RegisterView(),
       binding: RegisterBinding(),
+    ),
+    GetPage(
+      name: _Paths.ADD_FOOD,
+      page: () => const AddFoodView(),
+      binding: AddFoodBinding(),
     ),
   ];
 }

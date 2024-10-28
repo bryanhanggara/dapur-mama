@@ -2,7 +2,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:myapp/app/components/snackbar.dart';
+import 'package:myapp/app/modules/Auth/views/auth_view.dart';
 import 'package:myapp/app/routes/app_pages.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthController extends GetxController {
   TextEditingController emailController = TextEditingController();
@@ -14,12 +16,30 @@ class AuthController extends GetxController {
 
   Stream<User?> get streamAuthStatus => auth.authStateChanges();
 
+  @override
+  void onInit() {
+    super.onInit();
+    autoLogin();
+  }
+
+  void autoLogin() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    bool? isLoggedIn = prefs.getBool('isLoggedIn');
+
+    if (isLoggedIn == true) {
+      Get.offAllNamed(Routes.HOME);
+    }
+  }
+
   void login(String email, String password) async {
     try {
       UserCredential userCredential = await auth.signInWithEmailAndPassword(
         email: email,
         password: password,
       );
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      await prefs.setBool('isLoggedIn', true);
       Get.offAllNamed(Routes.HOME);
     } on FirebaseException catch (e) {
       if (e.code == 'invalid-email') {
@@ -33,6 +53,11 @@ class AuthController extends GetxController {
     } catch (e) {
       print(e);
     }
+  }
+
+  void logout() async {
+    await auth.signOut();
+    Get.off(() => AuthView());
   }
 
   @override

@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:get/get.dart';
+import 'package:myapp/app/modules/Auth/controllers/auth_controller.dart';
+import 'package:myapp/app/routes/app_pages.dart';
 
 import '../controllers/home_controller.dart';
 
@@ -62,6 +64,7 @@ class HomeView extends GetView<HomeController> {
 
   @override
   Widget build(BuildContext context) {
+    final AuthController authController = Get.find();
     return Scaffold(
       appBar: AppBar(
         title: Row(
@@ -115,10 +118,15 @@ class HomeView extends GetView<HomeController> {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                Icon(
-                  Icons.settings,
-                  color: Colors.orange,
-                  size: 30,
+                IconButton(
+                  onPressed: () {
+                    authController.logout();
+                  },
+                  icon: Icon(
+                    Icons.logout,
+                    size: 30,
+                    color: Colors.orange,
+                  ),
                 ),
               ],
             ),
@@ -157,10 +165,17 @@ class HomeView extends GetView<HomeController> {
                     }
                     if (snapshot.hasError) {
                       return Center(
-                        child: Image.asset(
-                          "assets/images/error.webp",
-                          width: 100,
-                          height: 100,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Image.asset(
+                              "assets/images/error.webp",
+                              width: 100,
+                              height: 100,
+                            ),
+                            Text("Terjadi Eror"),
+                          ],
                         ),
                       );
                     }
@@ -310,6 +325,17 @@ class HomeView extends GetView<HomeController> {
               ),
             )
           ],
+        ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Get.toNamed(Routes.ADD_FOOD);
+        },
+        backgroundColor: Colors.orange,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(100)),
+        child: Icon(
+          Icons.add,
+          color: Colors.white,
         ),
       ),
     );
