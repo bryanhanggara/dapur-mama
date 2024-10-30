@@ -103,7 +103,7 @@ class HomeView extends GetView<HomeController> {
         ],
       ),
       body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+        padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -144,8 +144,6 @@ class HomeView extends GetView<HomeController> {
                   ),
                 ],
               ),
-            ).paddingSymmetric(
-              vertical: 10,
             ),
             SizedBox(
               height: 10,
@@ -190,7 +188,10 @@ class HomeView extends GetView<HomeController> {
                           childAspectRatio: 0.95,
                         ),
                         itemBuilder: (_, index) => GestureDetector(
-                          onTap: () {},
+                          onTap: () {
+                            Get.toNamed(Routes.DETAIL_FOOD,
+                                arguments: snapshot.data?[index].id);
+                          },
                           child: Container(
                             decoration: BoxDecoration(
                               color: Colors.white,
@@ -253,7 +254,7 @@ class HomeView extends GetView<HomeController> {
                                                 width: 5,
                                               ),
                                               Text(
-                                                "${90} Menit",
+                                                "${snapshot.data?[index].waktuPembuatan} Menit",
                                                 style: TextStyle(
                                                   fontSize:
                                                       ScreenUtil().setSp(12),

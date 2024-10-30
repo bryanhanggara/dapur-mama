@@ -4,7 +4,7 @@ class Food {
   final int waktuPembuatan;
   final String deskripsi;
   final String jenis;
-  final String images;
+  String images;
   final String resep;
 
   Food({
@@ -26,6 +26,37 @@ class Food {
       jenis: json['jenis'] as String,
       images: json['images'] as String,
       resep: json['resep'] as String,
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'nama': nama,
+      'waktu_pembuatan': waktuPembuatan,
+      'deskripsi': deskripsi,
+      'jenis': jenis,
+      'images': images,
+      'resep': resep,
+    };
+  }
+
+  Food copyWith({
+    String? nama,
+    int? waktuPembuatan,
+    String? deskripsi,
+    String? jenis,
+    String? images,
+    String? resep,
+  }) {
+    return Food(
+      id: id,
+      nama: nama ?? this.nama,
+      waktuPembuatan: waktuPembuatan ?? this.waktuPembuatan,
+      deskripsi: deskripsi ?? this.deskripsi,
+      jenis: jenis ?? this.jenis,
+      images: images ?? this.images,
+      resep: resep ?? this.resep,
     );
   }
 }
