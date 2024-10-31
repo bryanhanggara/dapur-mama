@@ -24,11 +24,12 @@ class AuthController extends GetxController {
 
   void autoLogin() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-
     bool? isLoggedIn = prefs.getBool('isLoggedIn');
 
     if (isLoggedIn == true) {
-      Get.offAllNamed(Routes.HOME);
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        Get.offAllNamed(Routes.HOME);
+      });
     }
   }
 

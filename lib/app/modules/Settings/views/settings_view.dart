@@ -43,7 +43,7 @@ class SettingsView extends GetView<SettingsController> {
                 trailing: Switch(
                   value: controller.siangToggle.value,
                   onChanged: (value) async {
-                    await controller.toogleSiang();
+                    await controller.toggleSiang();
                   },
                 ),
               ),
@@ -57,7 +57,7 @@ class SettingsView extends GetView<SettingsController> {
                 trailing: Switch(
                   value: controller.malamToggle.value,
                   onChanged: (value) {
-                    controller.toogleMalam();
+                    controller.toggleMalam();
                   },
                 ),
               ),
