@@ -8,9 +8,13 @@ import 'package:myapp/app/modules/Auth/controllers/auth_controller.dart';
 import 'package:myapp/app/modules/Auth/views/loading_view.dart';
 import 'package:myapp/app/routes/app_pages.dart';
 import 'package:myapp/firebase_options.dart';
+import 'package:timezone/data/latest_all.dart' as tz;
+
+import 'app/utils/notification_api.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  tz.initializeTimeZones();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );

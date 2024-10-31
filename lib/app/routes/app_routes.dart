@@ -7,6 +7,7 @@ abstract class Routes {
   static const AUTH = _Paths.AUTH;
   static const ADD_FOOD = _Paths.ADD_FOOD;
   static const DETAIL_FOOD = _Paths.DETAIL_FOOD;
+  static const SETTINGS = _Paths.SETTINGS;
 }
 
 abstract class _Paths {
@@ -15,4 +16,5 @@ abstract class _Paths {
   static const AUTH = '/auth';
   static const ADD_FOOD = '/add-food';
   static const DETAIL_FOOD = '/detail-food';
+  static const SETTINGS = '/settings';
 }

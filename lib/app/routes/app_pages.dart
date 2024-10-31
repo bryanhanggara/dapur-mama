@@ -7,6 +7,8 @@ import '../modules/Auth/views/auth_view.dart';
 import '../modules/Auth/views/register_view.dart';
 import '../modules/DetailFood/bindings/detail_food_binding.dart';
 import '../modules/DetailFood/views/detail_food_view.dart';
+import '../modules/Settings/bindings/settings_binding.dart';
+import '../modules/Settings/views/settings_view.dart';
 import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/views/home_view.dart';
 
@@ -44,6 +46,11 @@ class AppPages {
       name: _Paths.DETAIL_FOOD,
       page: () => const DetailFoodView(),
       binding: DetailFoodBinding(),
+    ),
+    GetPage(
+      name: _Paths.SETTINGS,
+      page: () => const SettingsView(),
+      binding: SettingsBinding(),
     ),
   ];
 }

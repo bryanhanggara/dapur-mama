@@ -120,7 +120,7 @@ class HomeView extends GetView<HomeController> {
                 ),
                 IconButton(
                   onPressed: () {
-                    authController.logout();
+                    Get.toNamed(Routes.SETTINGS);
                   },
                   icon: Icon(
                     Icons.logout,
