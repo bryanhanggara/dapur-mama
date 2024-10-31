@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
@@ -269,12 +271,14 @@ class DetailFoodView extends GetView<DetailFoodController> {
   }
 
   void showUpdateModal(String foodId) {
+    final ImagePicker picker = ImagePicker();
+    XFile? selectedImage;
+
     controller.getFood(foodId).then((snapshot) {
       if (snapshot.exists) {
         final foodData = snapshot.data() as Map<String, dynamic>;
         Food food = Food.fromJson(foodData);
 
-        // Buat controller untuk setiap field
         final TextEditingController namaController =
             TextEditingController(text: food.nama);
         final TextEditingController jenisController =
@@ -286,9 +290,9 @@ class DetailFoodView extends GetView<DetailFoodController> {
         final TextEditingController waktuController =
             TextEditingController(text: food.waktuPembuatan.toString());
 
-        // Tampilkan modal bottom sheet
         showModalBottomSheet(
           context: Get.context!,
+          isScrollControlled: true,
           builder: (context) {
             return Padding(
               padding: const EdgeInsets.all(16.0),
@@ -298,10 +302,6 @@ class DetailFoodView extends GetView<DetailFoodController> {
                   TextField(
                     controller: namaController,
                     decoration: InputDecoration(labelText: 'Nama'),
-                  ),
-                  TextField(
-                    controller: jenisController,
-                    decoration: InputDecoration(labelText: 'Jenis'),
                   ),
                   TextField(
                     controller: deskripsiController,
@@ -318,8 +318,65 @@ class DetailFoodView extends GetView<DetailFoodController> {
                     keyboardType: TextInputType.number,
                   ),
                   SizedBox(height: 20),
+                  GestureDetector(
+                    onTap: () async {
+                      // Pilih gambar dari galeri
+                      final pickedImage = await ImagePicker()
+                          .pickImage(source: ImageSource.gallery);
+                      if (pickedImage != null) {
+                        controller.pickImage(pickedImage);
+                      }
+                    },
+                    child: Container(
+                      width: double.infinity,
+                      height: 150,
+                      decoration: BoxDecoration(
+                        color: Colors.grey[200],
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: Obx(() {
+                        if (controller.selectedImage.value != null) {
+                          return Image.file(
+                            File(controller.selectedImage.value!.path),
+                            fit: BoxFit.cover,
+                          );
+                        } else if (food.images.isNotEmpty) {
+                          return Image.network(food.images, fit: BoxFit.cover);
+                        } else {
+                          return Icon(Icons.add_photo_alternate,
+                              size: 50, color: Colors.grey[600]);
+                        }
+                      }),
+                    ),
+                  ),
+                  SizedBox(height: 20),
                   ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () async {
+                      // Perbarui food dengan data dari input
+                      Food updatedFood = food.copyWith(
+                        nama: namaController.text,
+                        deskripsi: deskripsiController.text,
+                        resep: resepController.text,
+                        waktuPembuatan: int.parse(waktuController.text),
+                      );
+                      await controller.updateMenu(
+                          updatedFood,
+                          selectedImage,
+                          namaController.text,
+                          int.parse(waktuController.text),
+                          deskripsiController.text,
+                          resepController.text);
+
+                      Get.offAllNamed(Routes.HOME);
+                      Get.snackbar(
+                        "Diubah",
+                        "Data berhasil dihapus",
+                        snackPosition: SnackPosition.BOTTOM,
+                        backgroundColor: Colors.orange,
+                        colorText: Colors.white,
+                        margin: const EdgeInsets.all(10),
+                      );
+                    },
                     child: Text('Simpan Perubahan'),
                   ),
                 ],
@@ -366,62 +423,4 @@ class DetailFoodView extends GetView<DetailFoodController> {
       ),
     );
   }
-
-  // void editMenu(Food food, BuildContext context) {
-  //   final image = XFile("").obs;
-  //   final namaController = TextEditingController();
-  //   final waktuPembuatanController = TextEditingController();
-  //   final resepController = TextEditingController();
-  //   final deskripsiController = TextEditingController();
-
-  //   namaController.text = food.nama;
-  //   waktuPembuatanController.text = food.waktuPembuatan.toString();
-  //   resepController.text = food.resep;
-  //   deskripsiController.text = food.deskripsi;
-
-  //   showModalBottomSheet(
-  //     context: context,
-  //     isScrollControlled: true,
-  //     backgroundColor: Colors.transparent,
-  //     builder: (context) => Obx(() => Container(
-  //           height: 0.9,
-  //           padding: EdgeInsets.only(
-  //               bottom: MediaQuery.of(context).viewInsets.bottom),
-  //           decoration: BoxDecoration(
-  //             color: Colors.white,
-  //             borderRadius: BorderRadius.circular(10),
-  //           ),
-  //           child: SingleChildScrollView(
-  //             child: Column(
-  //               crossAxisAlignment: CrossAxisAlignment.start,
-  //               mainAxisSize: MainAxisSize.min,
-  //               children: [
-  //                 Row(
-  //                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-  //                   children: [
-  //                     Text(
-  //                       "Edit Menu",
-  //                       style: TextStyle(
-  //                         color: Colors.black,
-  //                         fontWeight: FontWeight.bold,
-  //                       ),
-  //                     ),
-  //                     IconButton(
-  //                       onPressed: () {
-  //                         Get.back();
-  //                       },
-  //                       icon: Icon(
-  //                         Icons.arrow_back,
-  //                         size: 30,
-  //                         color: Colors.orange,
-  //                       ),
-  //                     ),
-  //                   ],
-  //                 ),
-  //               ],
-  //             ),
-  //           ),
-  //         )),
-  //   );
-  // }
 }

@@ -11,6 +11,12 @@ class DetailFoodController extends GetxController with StateMixin {
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
   final FirebaseStorage storage = FirebaseStorage.instance;
 
+  var selectedImage = Rx<XFile?>(null);
+
+  void pickImage(XFile? image) {
+    selectedImage.value = image;
+  }
+
   var foodId = ''.obs;
 
   Future<DocumentSnapshot<Object?>> getFood(String docId) async {
@@ -34,7 +40,6 @@ class DetailFoodController extends GetxController with StateMixin {
     String nama,
     int waktuPembuatan,
     String deskripsi,
-    String jenis,
     String resep,
   ) async {
     try {
@@ -51,11 +56,9 @@ class DetailFoodController extends GetxController with StateMixin {
         waktuPembuatan: waktuPembuatan,
         deskripsi: deskripsi,
         resep: resep,
-        jenis: jenis,
       );
 
       await firestore.collection('Food').doc(food.id).update(food.toJson());
-      Get.snackbar("Berhasiil", "Data diubah");
     } catch (e) {
       print(e);
       Get.snackbar("Eror", "Gagal update");
